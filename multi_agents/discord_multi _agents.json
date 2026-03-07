@@ -1,0 +1,69 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "discord-agent-reviewer",
+        "workspace": "/root/.openclaw/workspace-discord-reviewer",
+        "model": "openai-codex/gpt-5.3-codex"
+      },
+      {
+        "id": "discord-agent-coder",
+        "workspace": "/root/.openclaw/workspace-discord-coder",
+        "model": "openai-codex/gpt-5.3-codex"
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "agentId": "discord-agent-coder",
+      "match": {
+        "channel": "discord",
+        "accountId": "discord-account-coder"
+      }
+    },
+    {
+      "agentId": "discord-agent-reviewer",
+      "match": {
+        "channel": "discord",
+        "accountId": "discord-account-reviewer"
+      }
+    }
+  ],
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "groupPolicy": "allowlist",
+      "streaming": true,
+      "accounts": {
+        "discord-account-coder": {
+          "token": "<discord-bot-coder-token>",
+          "groupPolicy": "allowlist",
+          "streaming": true,
+          "guilds": {
+            "<discord-server-id>": {
+              "channels": {
+                "<coder-bot-channel-id>": {
+                  "allow": true
+                }
+              }
+            }
+          }
+        },
+        "discord-account-reviewer": {
+          "token": "<discord-bot-reviewer-token>",
+          "groupPolicy": "allowlist",
+          "streaming": true,
+          "guilds": {
+            "<discord-server-id>": {
+              "channels": {
+                "<reviewer-bot-channel-id>": {
+                  "allow": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
