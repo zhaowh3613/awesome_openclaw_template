@@ -1,0 +1,5 @@
+{
+  "slug": "agent-builder",
+  "version": "0.1.0",
+  "description": "Build a complete openclaw agent workspace from scratch with strict file layering, bilingual output, find-skills pre-install, and clawhub skill search."
+}
