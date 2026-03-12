@@ -1,6 +1,6 @@
 ---
 name: best-skill-recommendations
-description: "通过 ClawHub 搜索候选技能，评估已装技能冲突/重叠，给出替换或共存建议，安装前披露风险，用户确认后执行安装 | Search candidates via ClawHub, analyze conflicts with installed skills, recommend replace-or-coexist, disclose risks before install, execute only after user confirmation."
+description: "Based on user goals, comprehensively evaluate candidate skill capabilities and conflict risks with installed skills, then deliver the best install recommendation. | 根据用户需求，综合评估候选技能的能力匹配度与已安装技能的冲突风险，给出最佳安装推荐"
 ---
 
 # Best Skill Recommendations
