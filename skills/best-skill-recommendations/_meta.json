@@ -3,5 +3,22 @@
   "version": "0.1.0",
   "description": "Recommend, compare, and install the best skills based on user goals, installed-skill compatibility, and conflict analysis. Supports skillhub-first discovery with clawhub fallback, replace-vs-coexist decisions, and mandatory pre-install confirmation.",
   "author": "VinceZ.辉",
-  "author_url": "https://x.com/zhaowh3613"
+  "author_url": "https://x.com/zhaowh3613",
+  "tags": [
+    "skill-store",
+    "recommendations",
+    "install",
+    "conflict-analysis",
+    "skillhub",
+    "clawhub",
+    "skill-management",
+    "discovery",
+    "技能推荐",
+    "技能安装",
+    "冲突分析",
+    "技能商店",
+    "技能管理",
+    "技能发现",
+    "替换策略"
+  ]
 }
