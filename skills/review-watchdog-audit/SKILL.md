@@ -20,6 +20,42 @@ Audit these layers:
 Run only after explicit user request.
 Do not run in background automatically.
 
+## Scripted Operations
+
+Use bundled scripts for deterministic execution.
+
+### Read-only audit
+
+```bash
+python skills/review-watchdog-audit/scripts/audit_cron_watch.py \
+  --jobs /root/.openclaw/cron/jobs.json \
+  --runs-dir /root/.openclaw/cron/runs \
+  --state-file /root/.openclaw/memory/review-watch.json \
+  --output review-watchdog-audit-report.json
+```
+
+### Stop/Cleanup (explicit confirmation required)
+
+Dry run first:
+
+```bash
+python skills/review-watchdog-audit/scripts/stop_cleanup_watch.py \
+  --report review-watchdog-audit-report.json \
+  --jobs /root/.openclaw/cron/jobs.json
+```
+
+Apply changes only after user confirms:
+
+```bash
+python skills/review-watchdog-audit/scripts/stop_cleanup_watch.py \
+  --report review-watchdog-audit-report.json \
+  --jobs /root/.openclaw/cron/jobs.json \
+  --mode disable \
+  --target-severity P0 \
+  --apply \
+  --confirm STOP_AND_CLEANUP
+```
+
 ## Audit Workflow
 
 ### 1) Collect task inventory
