@@ -1,37 +1,85 @@
 # Awesome OpenClaw Templates
 
-A curated collection of useful configurations and agent templates for [OpenClaw](https://github.com/anthropics/openclaw).
+English | [中文](#中文介绍)
 
-## Templates
+A curated collection of practical templates and agent presets for OpenClaw.
+
+- Helps you bootstrap multi-agent workflows quickly
+- Includes ready-to-use channel bindings and role setup patterns
+- Focuses on real production-friendly defaults
+
+## Author
+
+**VinceZ.辉**  
+X: <https://x.com/zhaowh3613>
+
+## Project Overview
+
+This repository provides reusable OpenClaw templates, currently focused on:
+
+- **Discord multi-agent collaboration**
+- **Coder + Reviewer workflow setup**
+- **Channel routing and allowlist examples**
+
+## Included Template
 
 ### Multi-Agent: Discord Integration
 
-**File:** [`multi_agents/discord_multi _agents.json`](multi_agents/discord_multi%20_agents.json)
+**File:** `multi_agents/discord_multi _agents.json`
 
-A clean multi-agent template that sets up two collaborative agents on Discord:
+This template sets up two collaborative agents on Discord:
 
-| Agent      | ID                        | Model                    |
-|------------|---------------------------|--------------------------|
-| Coder      | `discord-agent-coder`     | `openai-codex/gpt-5.3-codex` |
-| Reviewer   | `discord-agent-reviewer`  | `openai-codex/gpt-5.3-codex` |
+- **Coder** (`discord-agent-coder`) — implementation and delivery
+- **Reviewer** (`discord-agent-reviewer`) — quality gate and review flow
 
-#### How It Works
+Both agents are configured with independent bindings, workspaces, and channel routing.
 
-- **Agents** — Each agent has a unique ID, dedicated workspace, and assigned model.
-- **Bindings** — Each agent is bound to a specific Discord account and channel, routing messages to the correct agent.
-- **Channels** — Discord channels use an `allowlist` policy to control access, with streaming enabled for real-time interaction.
+## Quick Start
 
-#### Quick Start
-
-1. Copy the template and replace the placeholder values:
-   - `<discord-bot-coder-token>` — Bot token for the coder agent
-   - `<discord-bot-reviewer-token>` — Bot token for the reviewer agent
-   - `<discord-server-id>` — Your Discord server (guild) ID
-   - `<coder-bot-channel-id>` — Channel ID for the coder bot
-   - `<reviewer-bot-channel-id>` — Channel ID for the reviewer bot
-2. Place the config in your OpenClaw configuration directory.
-3. Start OpenClaw — both agents will connect to their respective Discord channels.
+1. Copy the template and replace placeholders:
+   - `<discord-bot-coder-token>`
+   - `<discord-bot-reviewer-token>`
+   - `<discord-server-id>`
+   - `<coder-bot-channel-id>`
+   - `<reviewer-bot-channel-id>`
+2. Put it into your OpenClaw config directory.
+3. Start OpenClaw and verify both agents are online.
 
 ## Contributing
 
-Feel free to submit PRs with new templates or improvements to existing ones.
+PRs are welcome for:
+
+- New templates
+- Better workflow presets
+- Localization and documentation improvements
+
+---
+
+## 中文介绍
+
+这是一个面向 OpenClaw 的高质量模板仓库，帮助你快速搭建可落地的 Agent 工作流。
+
+### 项目目标
+
+- 提供开箱即用的多 Agent 配置模板
+- 降低频道绑定、权限控制、路由策略的上手成本
+- 沉淀适合真实协作场景的最佳实践
+
+### 当前内容
+
+目前主要包含 **Discord 多 Agent 协作模板**，覆盖：
+
+- Coder + Reviewer 双角色协同
+- 独立账号/频道绑定
+- allowlist 访问控制示例
+
+### 快速使用
+
+1. 复制模板文件并替换占位符（Bot Token、频道 ID、服务器 ID）。
+2. 放入 OpenClaw 配置目录。
+3. 启动 OpenClaw，确认两个 Agent 均上线。
+
+### 作者
+
+**VinceZ.辉**  
+X：<https://x.com/zhaowh3613>
