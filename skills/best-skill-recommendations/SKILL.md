@@ -7,6 +7,17 @@ description: "Based on user goals, comprehensively evaluate candidate skill capa
 
 **Primary role:** Evaluate and recommend skills already discovered by an upstream skill search. Only when no upstream results exist does this skill independently search `clawhub`, then apply the same evaluation logic.
 
+## Prerequisites
+
+Before this skill can operate, confirm the following:
+
+- **`clawhub` CLI is installed** and available in the agent's `PATH`. This skill issues `clawhub search`, `clawhub list`, `clawhub install`, and `clawhub uninstall` commands. If the binary is absent, all discovery and install steps will fail.
+- **Authentication:** Run `clawhub login` in advance. The clawhub CLI stores credentials in its own default config path (managed by the CLI, not by this skill). No additional environment variables are required by this skill.
+- **Permissions in scope:** This skill will only:
+  1. Read the installed skill list via `clawhub list` (read-only).
+  2. Run `clawhub install <skill>` or `clawhub uninstall <skill>` — **only after explicit user confirmation** at the Pre-Install Gate (Step 5).
+  It will not access other system files, credentials, or APIs beyond the clawhub CLI.
+
 ## Mandatory Store Policy
 
 1. **Prefer upstream results first.** If any upstream skill search has already returned candidates, use those directly — do not re-search.
@@ -44,7 +55,11 @@ Return the command output and build a candidate list annotated with source and v
 Present the candidate list (from upstream or self-discovered), annotated with source and version.
 
 ### 3) Evaluate Installed Skills and Compatibility
-Inspect installed skills and compare with candidates:
+Enumerate installed skills by running:
+```
+clawhub list
+```
+Parse the output to get the current installed skill set. Compare each installed skill against candidates:
 - overlap: full / partial / complementary
 - conflict risk: command/workflow collision, duplicated automation, behavior mismatch
 - coexist feasibility: high / medium / low
@@ -61,7 +76,12 @@ Include reasons and trade-offs.
 Before any install action, present:
 - source (clawhub)
 - version
-- notable risk signals (low install base, low maintenance signals, heavy scripts/permissions, very new release)
+- notable risk signals — check for **any** of the following:
+  - install count < 10 (low adoption)
+  - last update > 6 months ago (low maintenance signal)
+  - requires broad file system or network permissions
+  - published < 2 weeks ago (very new, unvetted)
+  - no author URL or verified identity
 - replace/coexist plan
 
 Then explicitly ask for user confirmation.
