@@ -1,39 +1,75 @@
 ---
 name: best-skill-recommendations
-version: 0.1.0
-description: Recommend, compare, and install the best skills based on user goals, installed-skill compatibility, and conflict analysis. Use when users ask to find/recommend/install/update skills, ask whether skills conflict, or ask whether to replace existing skills. Auto-collaborate with find-skills during skill discovery.
+description: "技能综合评估与推荐，支持腾讯 SkillHub 和 ClawHub 双源候选，冲突检测，替换/共存决策，安全安装确认 | Evaluate and recommend skills from Tencent SkillHub & ClawHub, with conflict detection, replace-or-coexist decisions, and safe install confirmation."
 ---
 
 # Best Skill Recommendations
 
-Provide end-to-end skill store guidance: discovery, evaluation, conflict analysis, install strategy (replace vs coexist), and safe install confirmation.
+**Primary role:** Evaluate and recommend skills already discovered by other skills (e.g. `find-skills`). Only when no upstream results exist does this skill independently search `clawhub` and `skillhub`, then apply the same evaluation logic.
+
+## About Tencent SkillHub
+
+[SkillHub](https://skillhub.tencent.com/) is Tencent's official skill marketplace for AI agents. It provides:
+
+- A curated, searchable registry of agent skills (public and private)
+- Version management, author attribution, and install metrics
+- CLI tooling (`skillhub`) for search, install, update, and publish
+- Conflict-aware dependency resolution between skills
+
+This skill uses `skillhub` as the **preferred discovery and install channel**. When `skillhub` is unavailable or yields no match, it falls back to `clawhub`.
+
+### Install SkillHub CLI
+
+If `skillhub` is not installed, run:
+
+```bash
+curl -fsSL https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/install/install.sh | bash
+```
+
+### Key Commands
+
+| Action | Command |
+|---|---|
+| Search skills | `skillhub search <keywords>` |
+| Install a skill | `skillhub install <skill>` |
+| Update a skill | `skillhub update <skill>` |
+| List installed | `skillhub list` |
+| Uninstall | `skillhub uninstall <skill>` |
 
 ## Mandatory Store Policy
 
-1. Run `skillhub` first for discovery/install/update.
-2. If unavailable, rate-limited, or no match, fallback to `clawhub`.
+1. **Prefer upstream results first.** If `find-skills` or any other skill has already returned candidates, use those directly — do not re-search.
+2. Only when no upstream candidates exist: search `skillhub` first, then fall back to `clawhub`.
 3. Never claim exclusivity; both public and private registries are valid.
 4. Before install, always summarize source, version, and notable risk signals.
-5. For search requests, execute `skillhub search <keywords>` first and report output.
+5. If a fresh search is needed, run `skillhub search <keywords>` and report output before evaluating.
 
 ## Auto-Trigger and Collaboration
 
-- When user intent is “find skill / recommend skill / install skill / update skill”, trigger this skill.
-- If `find-skills` already returned candidates, reuse them directly.
-- If candidates are missing/weak, run fresh search with `skillhub` first.
+- **Preferred entry:** triggered after `find-skills` (or similar) has already produced a candidate list. Reuse those results directly.
+- **Standalone entry:** triggered when the user asks to recommend/install/compare skills but no upstream results exist. In this case, independently search and produce candidates before evaluating.
+- Never re-search if usable upstream candidates are already available.
 
 ## Workflow
 
-### 1) Clarify Need (brief)
-Capture:
+### 0) Check for Upstream Candidates (first)
+Before doing anything else:
+- If another skill (e.g. `find-skills`) has already returned a candidate list → **skip to Step 2** using those results.
+- If no upstream candidates exist → proceed to Step 1.
+
+### 1) Self-Discover (only when no upstream results)
+Clarify the user's need:
 - target task(s)
 - priority (speed/stability/features/safety)
 - constraints (region, cost, runtime)
 
-### 2) Discover Candidates
-- Execute: `skillhub search <keywords>`
-- If no usable result, fallback to clawhub search path.
-- Return raw command summary + candidate list.
+Then search independently:
+1. `skillhub search <keywords>` — use results if available.
+2. If skillhub is unavailable, rate-limited, or returns no match: search `clawhub`.
+3. Combine results into a unified candidate list, noting the source of each.
+
+### 2) Evaluate Candidates
+Present the candidate list (from upstream or self-discovered), annotated with source and version.
 
 ### 3) Evaluate Installed Skills and Compatibility
 Inspect installed skills and compare with candidates:
