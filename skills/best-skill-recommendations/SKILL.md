@@ -5,11 +5,11 @@ description: "技能综合评估与推荐，通过 ClawHub 获取候选技能，
 
 # Best Skill Recommendations
 
-**Primary role:** Evaluate and recommend skills already discovered by other skills (e.g. `find-skills`). Only when no upstream results exist does this skill independently search `clawhub`, then apply the same evaluation logic.
+**Primary role:** Evaluate and recommend skills already discovered by an upstream skill search. Only when no upstream results exist does this skill independently search `clawhub`, then apply the same evaluation logic.
 
 ## Mandatory Store Policy
 
-1. **Prefer upstream results first.** If `find-skills` or any other skill has already returned candidates, use those directly — do not re-search.
+1. **Prefer upstream results first.** If any upstream skill search has already returned candidates, use those directly — do not re-search.
 2. Only when no upstream candidates exist: search `clawhub` directly.
 3. Never claim exclusivity; both public and private registries are valid.
 4. Before install, always summarize source, version, and notable risk signals.
@@ -17,7 +17,7 @@ description: "技能综合评估与推荐，通过 ClawHub 获取候选技能，
 
 ## Auto-Trigger and Collaboration
 
-- **Preferred entry:** triggered after `find-skills` (or similar) has already produced a candidate list. Reuse those results directly.
+- **Preferred entry:** triggered after an upstream skill search has already produced a candidate list. Reuse those results directly.
 - **Standalone entry:** triggered when the user asks to recommend/install/compare skills but no upstream results exist. In this case, independently search `clawhub` and produce candidates before evaluating.
 - Never re-search if usable upstream candidates are already available.
 
@@ -25,7 +25,7 @@ description: "技能综合评估与推荐，通过 ClawHub 获取候选技能，
 
 ### 0) Check for Upstream Candidates (first)
 Before doing anything else:
-- If another skill (e.g. `find-skills`) has already returned a candidate list → **skip to Step 2** using those results.
+- If an upstream skill search has already returned a candidate list → **skip to Step 2** using those results.
 - If no upstream candidates exist → proceed to Step 1.
 
 ### 1) Self-Discover (only when no upstream results)
