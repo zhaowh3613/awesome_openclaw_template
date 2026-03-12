@@ -1,0 +1,7 @@
+{
+  "slug": "best-skill-recommendations",
+  "version": "0.1.0",
+  "description": "Recommend, compare, and install the best skills based on user goals, installed-skill compatibility, and conflict analysis. Supports skillhub-first discovery with clawhub fallback, replace-vs-coexist decisions, and mandatory pre-install confirmation.",
+  "author": "VinceZ.辉",
+  "author_url": "https://x.com/zhaowh3613"
+}

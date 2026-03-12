@@ -1,5 +1,6 @@
 ---
 name: best-skill-recommendations
+version: 0.1.0
 description: Recommend, compare, and install the best skills based on user goals, installed-skill compatibility, and conflict analysis. Use when users ask to find/recommend/install/update skills, ask whether skills conflict, or ask whether to replace existing skills. Auto-collaborate with find-skills during skill discovery.
 ---
 
