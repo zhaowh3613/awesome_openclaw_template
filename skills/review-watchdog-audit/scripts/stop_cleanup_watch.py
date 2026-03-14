@@ -10,53 +10,30 @@ Safety:
 from __future__ import annotations
 
 import argparse
-import json
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
-def now_stamp() -> str:
-    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-
-
-def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def extract_jobs(payload: Any) -> tuple[list[dict[str, Any]], str]:
-    if isinstance(payload, dict) and isinstance(payload.get("jobs"), list):
-        return payload["jobs"], "dict"
-    if isinstance(payload, list):
-        return payload, "list"
-    raise ValueError("Unsupported jobs schema")
-
-
-def save_jobs(path: Path, original: Any, jobs: list[dict[str, Any]], schema: str) -> None:
-    if schema == "dict":
-        original["jobs"] = jobs
-        content = original
-    else:
-        content = jobs
-    path.write_text(json.dumps(content, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-
-def job_name(job: dict[str, Any], idx: int) -> str:
-    for k in ("id", "name", "jobId", "label"):
-        v = job.get(k)
-        if isinstance(v, str) and v.strip():
-            return v.strip()
-    return f"job-{idx}"
+from common import (
+    DEFAULT_OPENCLAW_DIR,
+    extract_job_name,
+    extract_jobs,
+    now_stamp,
+    safe_read_json,
+    save_jobs,
+)
 
 
 def main() -> int:
+    default_jobs = str(DEFAULT_OPENCLAW_DIR / "cron" / "jobs.json")
+
     parser = argparse.ArgumentParser(description="Stop/cleanup invalid cron watch tasks")
     parser.add_argument("--report", default="review-watchdog-audit-report.json", help="Audit report path")
-    parser.add_argument("--jobs", default="/root/.openclaw/cron/jobs.json", help="Cron jobs file")
+    parser.add_argument("--jobs", default=default_jobs, help="Cron jobs file")
     parser.add_argument("--state-files", nargs="*", default=[], help="Optional stale state files to remove")
     parser.add_argument("--mode", choices=["disable", "delete"], default="disable", help="How to stop target jobs")
-    parser.add_argument("--target-severity", default="P0", help="Only apply to findings of this severity")
+    parser.add_argument("--target-severity", default="P0", help="Comma-separated severity levels to target (e.g. P0,P1)")
     parser.add_argument("--apply", action="store_true", help="Actually apply changes")
     parser.add_argument("--confirm", default="", help="Must be STOP_AND_CLEANUP to apply")
     args = parser.parse_args()
@@ -64,23 +41,35 @@ def main() -> int:
     report_path = Path(args.report)
     jobs_path = Path(args.jobs)
 
-    if not report_path.exists():
-        raise SystemExit(f"Report not found: {report_path}")
+    report = safe_read_json(report_path)
+    if report is None:
+        raise SystemExit(f"Report not found or unreadable: {report_path}")
     if not jobs_path.exists():
         raise SystemExit(f"Jobs file not found: {jobs_path}")
 
-    report = load_json(report_path)
+    target_severities = {s.strip() for s in args.target_severity.split(",")}
     findings = report.get("findings", []) if isinstance(report, dict) else []
     target_names = {
         f.get("name")
         for f in findings
-        if isinstance(f, dict) and f.get("severity") == args.target_severity and isinstance(f.get("name"), str)
+        if isinstance(f, dict)
+        and f.get("severity") in target_severities
+        and isinstance(f.get("name"), str)
     }
+
+    # compute token savings estimate
+    total_wasted = sum(
+        f.get("wasted_tokens") or 0
+        for f in findings
+        if isinstance(f, dict) and f.get("name") in target_names
+    )
 
     print("=== stop-cleanup plan ===")
     print(f"Target severity: {args.target_severity}")
     print(f"Target jobs: {sorted(target_names) if target_names else '[]'}")
     print(f"Mode: {args.mode}")
+    if total_wasted > 0:
+        print(f"Estimated token savings: {total_wasted:,}")
 
     if not args.apply:
         print("Dry-run only. Re-run with --apply --confirm STOP_AND_CLEANUP")
@@ -93,16 +82,18 @@ def main() -> int:
     shutil.copy2(jobs_path, backup_path)
     print(f"Backup created: {backup_path}")
 
-    payload = load_json(jobs_path)
+    payload = safe_read_json(jobs_path)
+    if payload is None:
+        raise SystemExit(f"Failed to read jobs file: {jobs_path}")
     jobs, schema = extract_jobs(payload)
 
     new_jobs: list[dict[str, Any]] = []
-    changed = []
+    changed: list[tuple[str, str]] = []
     for idx, job in enumerate(jobs):
         if not isinstance(job, dict):
             new_jobs.append(job)
             continue
-        name = job_name(job, idx)
+        name = extract_job_name(job, idx)
         if name not in target_names:
             new_jobs.append(job)
             continue
@@ -119,7 +110,7 @@ def main() -> int:
 
     save_jobs(jobs_path, payload, new_jobs, schema)
 
-    removed_states = []
+    removed_states: list[str] = []
     for s in args.state_files:
         p = Path(s)
         if p.exists() and p.is_file():
@@ -133,6 +124,9 @@ def main() -> int:
         print("Removed state files:")
         for p in removed_states:
             print(f"- {p}")
+
+    if total_wasted > 0:
+        print(f"Estimated token savings: {total_wasted:,} tokens")
 
     print("Done. To rollback, restore backup:")
     print(f"cp {backup_path} {jobs_path}")

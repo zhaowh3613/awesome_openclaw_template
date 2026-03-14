@@ -1,0 +1,30 @@
+{
+  "slug": "review-watchdog-audit",
+  "version": "0.2.0",
+  "description": "定时巡检 cron review/watch 任务，检测无效 token 消耗、重复失败和异常运行，主动告警并提供停止/清理方案 | Patrol and audit cron review/watch tasks for wasted token consumption, repeated failures, and anomalies. Provides alerting and stop/cleanup recommendations.",
+  "author": "VinceZ.辉",
+  "author_url": "https://x.com/zhaowh3613",
+  "requires": {
+    "binaries": ["python3"],
+    "permissions": [
+      "read cron config and logs",
+      "modify cron jobs.json (only with explicit confirmation)"
+    ]
+  },
+  "tags": [
+    "cron-audit",
+    "watchdog",
+    "review-watch",
+    "token-waste",
+    "cost-optimization",
+    "alerting",
+    "patrol",
+    "cleanup",
+    "定时任务审计",
+    "token消耗",
+    "资源优化",
+    "告警",
+    "巡检",
+    "清理"
+  ]
+}
