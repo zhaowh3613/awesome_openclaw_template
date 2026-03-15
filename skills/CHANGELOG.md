@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.3] - 2026-03-15
+
+### Added / 新增
+
+- **新技能：skill-upgrade-checker (v0.1.0)**：检查已安装技能的可用升级，通过语义版本比较和变更日志解读提供风险评估，经用户确认后执行一键升级。
+  **New skill: skill-upgrade-checker (v0.1.0):** checks installed skills for available upgrades, provides risk assessment via semver comparison and changelog interpretation, and executes upgrades after explicit user confirmation.
+
+---
+
 ## [0.2.2] - 2026-03-12
 
 ### Added / 新增
