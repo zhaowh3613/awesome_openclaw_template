@@ -1,0 +1,32 @@
+{
+  "slug": "review-watchdog-audit",
+  "version": "0.1.0",
+  "description": "审计定时 PR 监控任务的无效流量消耗、重复失败与冗余监控，提供一键停止与清理方案 | Audit scheduled PR watch cron tasks for invalid traffic burn, repeated failures, and duplicate monitors, with a one-click stop-and-cleanup plan.",
+  "author": "VinceZ.辉",
+  "author_url": "https://x.com/zhaowh3613",
+  "requires": {
+    "binaries": ["python3"],
+    "auth": "No authentication required. This skill reads local cron config and log files only.",
+    "permissions": [
+      "read cron job config via cron/jobs.json",
+      "read execution logs via cron/runs/*.jsonl",
+      "read watch state files (e.g. memory/review-watch.json)",
+      "disable or delete cron tasks (only with explicit user confirmation)"
+    ]
+  },
+  "tags": [
+    "cron",
+    "audit",
+    "watchdog",
+    "pr-watch",
+    "cleanup",
+    "cost-control",
+    "maintenance",
+    "定时任务",
+    "审计",
+    "流量监控",
+    "清理",
+    "成本控制",
+    "维护"
+  ]
+}
