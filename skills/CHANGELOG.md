@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.5] - 2026-03-18
+
+### Added / 新增
+
+- **新技能：dream-interpretation-nsfw (v0.1.0)**：周公云雨解梦师（18+ 男女通用版），融合周公解梦古籍、弗洛伊德与荣格性心理学的成人梦境深度解析技能，四层解读结构，四种风格自由切换。
+  **New skill: dream-interpretation-nsfw (v0.1.0):** Duke of Zhou's Intimate Dream Interpreter (18+ Unisex), deep adult dream analysis combining classical Chinese dream dictionary with Freudian & Jungian psychosexual theory. 4-layer interpretation structure with 4 switchable style modes.
+
+---
+
 ## [0.2.4] - 2026-03-18
 
 ### Added / 新增
