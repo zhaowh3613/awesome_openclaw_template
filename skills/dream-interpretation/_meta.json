@@ -1,0 +1,31 @@
+{
+  "slug": "dream-interpretation",
+  "version": "0.1.0",
+  "description": "基于周公解梦的智能梦境解析技能，支持多维度梦境分析、象征符号解读、吉凶判断与个性化建议 | AI-powered dream interpretation skill based on Duke of Zhou's Dream Dictionary, supporting multi-dimensional dream analysis, symbol decoding, fortune assessment, and personalized advice.",
+  "author": "VinceZ.辉",
+  "author_url": "https://x.com/zhaowh3613",
+  "requires": {
+    "binaries": [],
+    "auth": "No authentication required. This skill uses built-in knowledge only.",
+    "permissions": [
+      "read user-provided dream descriptions (text input only)",
+      "no file system access, no network access, no external API calls"
+    ]
+  },
+  "tags": [
+    "dream-interpretation",
+    "zhougong",
+    "fortune",
+    "symbolism",
+    "culture",
+    "chinese-tradition",
+    "divination",
+    "周公解梦",
+    "梦境解析",
+    "吉凶判断",
+    "象征解读",
+    "传统文化",
+    "占卜",
+    "解梦"
+  ]
+}

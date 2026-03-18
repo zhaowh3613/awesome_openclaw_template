@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.4] - 2026-03-18
+
+### Added / 新增
+
+- **新技能：dream-interpretation (v0.1.0)**：基于周公解梦的智能梦境解析技能，支持多维度梦境分析、象征符号解读、吉凶判断与个性化建议。无需外部依赖，纯知识驱动。
+  **New skill: dream-interpretation (v0.1.0):** AI-powered dream interpretation skill based on Duke of Zhou's Dream Dictionary, supporting multi-dimensional dream analysis, symbol decoding, fortune assessment, and personalized advice. No external dependencies — purely knowledge-driven.
+
+---
+
 ## [0.2.3] - 2026-03-15
 
 ### Added / 新增
