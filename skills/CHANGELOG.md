@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.6] - 2026-03-19
+
+### Changed / 调整
+
+- **dream-interpretation-nsfw 升级至 v0.2.0**：从「18+ 男女通用版」重构为「18+ 自然腹黑版」，核心变化：四层分层结构改为自然讲故事式一气呵成解读，不再强行性化——性只在梦自然带出时轻点，其他梦老实讲故事带腹黑调侃，语气从温柔直白调整为自然亲密+腹黑坏笑。
+  **dream-interpretation-nsfw upgraded to v0.2.0:** Refactored from "18+ Unisex" to "18+ Natural Dark-Humor Edition". Key changes: replaced rigid 4-layer structure with natural storytelling flow, no longer forces sexual interpretation — sexuality appears only when the dream naturally brings it, otherwise honest storytelling with dark-humor teasing. Tone shifted from gentle-direct to natural-intimate with playful sarcasm.
+
+---
+
 ## [0.2.5] - 2026-03-18
 
 ### Added / 新增

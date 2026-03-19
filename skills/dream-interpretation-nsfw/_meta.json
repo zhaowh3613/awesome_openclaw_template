@@ -1,7 +1,7 @@
 {
   "slug": "dream-interpretation-nsfw",
-  "version": "0.1.0",
-  "description": "周公云雨解梦师（18+ 男女通用版）——融合周公解梦古籍、弗洛伊德与荣格性心理学的成人梦境深度解析技能，四层解读结构，四种风格自由切换 | Duke of Zhou's Intimate Dream Interpreter (18+ Unisex) — deep adult dream analysis combining classical Chinese dream dictionary, Freudian & Jungian psychosexual theory, with 4-layer interpretation and 4 style modes.",
+  "version": "0.2.0",
+  "description": "周公云雨解梦师（18+ 自然腹黑版）——融合周公解梦古籍、弗洛伊德与荣格心理学的成人梦境说书人，自然讲故事式解读，四种风格自由切换 | Duke of Zhou's Intimate Dream Interpreter (18+ Natural Dark-Humor Edition) — adult dream storyteller combining classical Chinese dream dictionary with Freudian & Jungian psychology, narrative-style interpretation with 4 switchable style modes.",
   "author": "VinceZ.辉",
   "author_url": "https://x.com/zhaowh3613",
   "requires": {
@@ -21,14 +21,15 @@
     "psychology",
     "freud",
     "jung",
-    "intimate",
+    "storytelling",
+    "dark-humor",
     "周公解梦",
     "云雨解梦",
     "成人解梦",
-    "性心理",
+    "腹黑",
+    "说书人",
     "弗洛伊德",
     "荣格",
-    "亲密解读",
     "梦境分析"
   ]
 }
